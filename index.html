@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An open source spectral library and DIY spectrometry community developing environmental testing techniques.">
+    <meta name="author" content="Public Lab Contributors">
+
+    <title>Spectral Workbench</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/swb.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        <a href="index.html" id="home-link"><img src="images/logo.png" style="height:20px;"/> Spectral Workbench</a>
+                    </a>
+                </li>
+                <li>
+                    <a href="#dashboard" id="dashboard-link">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#capture" id="capture-link">Capture</a>
+                </li>
+                <li>
+                    <a href="#analyze" id="analyze-link">Analyze</a>
+                </li>
+                <li>
+                    <a href="#upload" id="upload-link">Upload to SWB</a>
+                </li>
+                <li>
+                    <a href="#help" id="help-link">Help!</a>
+                </li>
+                <li>
+                    <a href="#menu-toggle" class="menu-toggle">Hide this menu</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Home content -->
+                    <div class="col-lg-12" id="home" style="display:block">
+                        <h1>Welcome!</h1>
+                        <p>This is Spectral Workbench Offline!</p>
+                        <p>Make sure to check out all the awesome features it has!</p>
+                        <p style="dispay:none">No saved spectrums yet!</p>
+                        <a href="#menu-toggle" class="btn btn-default menu-toggle" id="menu-toggle">Toggle Menu</a>
+                    </div>
+
+                    <!-- Dashboard content -->
+                    <div class="col-lg-12" id="dashboard" style="display:none">
+                        <h1>Dashboard</h1>
+                        <p>This is Spectral Workbench Offline!</p>
+                        <p>Make sure to check out all the awesome features it has!</p>
+
+                        <div class="alert alert-success" role="alert" id="justsaved">Spectrum succesfully saved! </div>
+
+                        <p id="nospectrums" style="display:none">No spectrums saved yet!</p>
+
+                        <div class="row" id="thumbnails" style="display:none">
+                          <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                              <img data-src="holder.js/300x300" alt="...">
+                              <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p>...</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <!-- Capture content -->
+                    <div class="col-lg-12" id="capture" style="display:none">
+                        <h1>Capture</h1>
+                        <div class="row">
+                          <div class="col-md-4 precapture">
+                          <!-- Web Cam area -->
+                            <div>
+                              <div id="heightIndicator" style="display:none;position:absolute;margin:0;z-index:999;border-right:0px solid #ff4;border-bottom:2px solid #ff4;height:1px;margin-top:120px;width:320px;"></div>
+                              <div id="webcam-msg"><p><b>Requesting camera access... <br/>(<a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">Firefox</a>, <a href="https://play.google.com/store/apps/details?id=com.opera.browser">Opera</a> or Chrome on Android, or <a href="https://itunes.apple.com/us/app/bowser/id560478358">Bowser</a> on iOS). Please click "Allow" when prompted.</b></p></div>
+                              <div style="" id="webcam"></div>
+                            </div>
+
+                            <div style="padding-top:250px;">
+                              <!-- Example Pic-->
+
+                              <img src="images/calibration-example.png" style="width:320px">
+
+                            </div>
+                          </div>
+
+                          <div class="col-md-8 precapture" id="instructionsarea" style="display:block">
+                          <!-- Instructions Area -->
+                          <h4>Instructions</h4>
+                              <ol>
+                                  <li>Check if you can see the spectrum. If you cannot, try <a rel="tooltip" title="" class="btn btn-primary btn-sm" onClick="$W.chromeCameraSwitch()" data-original-title="Switch between cameras"><i class="icon-white icon-camera"></i> Switching the Camera </a></li>
+                                  <br/>
+                                  <li>If required, <a rel="tooltip" title="" class="btn btn-primary btn-sm" onclick="$W.flip_horizontal()" data-original-title="Flip video horizontally"><i class="icon-white icon-resize-horizontal"></i> Flip</a> or <a rel="tooltip" title="" class="btn btn-primary btn-sm" onclick="$W.toggle_rotation()" data-original-title="Rotate video 90 °"><i class="icon-white icon-repeat"></i> Rotate</a></li>
+                                  <br/>
+                                  <li>Select the sample row or <a rel="tooltip" title="" class="btn btn-primary btn-sm" onClick="$W.auto_detect_sample_row()" data-original-title="Auto detect sample row"><i class="icon-white icon-search"></i> Autoselect Sample Row</a></li>
+                                  <br/>
+                                  <li>Verify if sample row is correct</li>
+                                  <br/>
+                                  <li><a class="btn btn-success" onClick="$('.precapture').hide();$('.startcapture').show();">Start Capturing</a></li>
+                              </ol>
+                          </div>
+
+                          <div class="col-md-4 startcapture" id="toolsarea" style="display:none">
+                          <!-- Tools Area -->
+                    				<div class="tool-pane" id="tool-pane">
+                    					<p><small><b>ADJUSTMENTS</b></small></p>
+                    					<div class="btn-group toolbar" data-toggle="buttons-checkbox" style="margin-bottom:5px;">
+                    						<a id="geotag-btn" rel="tooltip" title="" class="btn btn-default active" onclick="$('#geotag-btn').button('toggle');$('#geotag').val('true'!=$('#geotag').val());$W.geolocate()" data-original-title="Geocode"><i class="icon-white icon-map-marker"></i></a>
+
+                    						<a rel="tooltip" title="" class="btn btn-default" onclick="$W.toggle_rotation()" data-original-title="Rotate video"><i class="icon-white icon-repeat"></i></a>
+                    						<a rel="tooltip" title="" class="btn btn-default" onclick="$W.flip_horizontal()" data-original-title="Flip video horizontally"><i class="icon-white icon-resize-horizontal"></i></a>
+                    						<a rel="tooltip" title="" class="btn btn-default" onclick="$W.scale_h = parseFloat(prompt('Enter a horizontal scaling factor (default is 1):'))" data-original-title="Scale video"><i class="icon-white icon-fullscreen"></i></a>
+                    					</div>
+
+                    					<p><small><b>TOOLS</b></small></p>
+                    					<div class="btn-group toolbar" style="margin-bottom:5px;">
+                    						<a rel="tooltip" title="" class="btn btn-default" href="#macros" data-toggle="tab" data-original-title="Scripting"><i class="icon-white icon-file-alt"></i></a>
+                    						<a href="#compare" data-toggle="tab" rel="tooltip" title="" class="btn btn-default" data-original-title="Compare"><i class="icon-white icon-columns"></i></a>
+                    						<a rel="tooltip" title="" class="disabled btn btn-default" data-original-title="Find matches"><i class="icon-white icon-magnet"></i></a>
+                    					</div>
+
+                    					<p><small><b>DISPLAY</b></small></p>
+                    					<div class="btn-group toolbar" data-toggle="buttons-radio">
+                    						<a rel="tooltip" title="" class="btn btn-default" onclick="$W.toggle_mode()" data-original-title="Default mode"><i class="icon-white icon-circle-blank"></i></a>
+                    						<a rel="tooltip" title="" class="btn btn-default" onclick="$W.toggle_mode()" data-original-title="RGB mode"><i class="icon-white icon-adjust"></i></a>
+                    						<a rel="tooltip" title="" class="btn btn-default" onclick="$W.show_combined()" data-original-title="Combined readout (beta)"><i class="icon-white icon-list-ul"></i></a>
+                    					</div>
+                    				</div>
+
+                            <p><small><b><br/>SAVE SPECTRUM</b></small></p>
+                            <form role="form" id="spectrumform">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="Text" placeholder="Title">
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea class="form-control" id="Description" placeholder="Description"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="Tags" placeholder="Enter tags separated by a comma.">
+                                </div>
+
+                                <div class="form-group">
+                                        <button type="submit" class="btn btn-primary" id="savespectrum_btn"><i class="icon-white icon-save"></i> Save</button>
+                                        <a class="btn btn-default" onclick="window.open($W.canvas.toDataURL(),'_newtab').focus()"><i class="icon-white icon-download"></i> Download Spectrum</a>
+                                </div>
+                            </form>
+                          </div>
+                          <div class="col-md-8 startcapture" id="canvasarea" style="display:none">
+                          <!-- Canvas Area -->
+                              <div id="graph" style="width:100%;height:200px;margin:10px 0; color:#000;"></div>
+                              <canvas style="width:100%;height:100px;margin:10px 0;border:1px solid;" id="canvas"></canvas>
+                          </div>
+                        </div>
+                    </div>
+
+                    <!-- Analyze content -->
+                    <div class="col-lg-12" id="analyze" style="display:none">
+                        <h1>Analyze</h1>
+                        <p>This is Spectral Workbench Offline!</p>
+                        <p>Make sure to check out all the awesome features it has!</p>
+                        <a href="#menu-toggle" class="btn btn-default menu-toggle" id="menu-toggle">Toggle Menu</a>
+                    </div>
+
+                    <!-- Upload content -->
+                    <div class="col-lg-12" id="upload" style="display:none">
+                        <h1>Upload</h1>
+                        <p>Please download your spectrum repository and upload it on SWB. (Recommended)</p>
+                        <p>Or, we can automate that for you (beta).</p>
+                        <a href="#menu-toggle" class="btn btn-default menu-toggle" id="menu-toggle">Toggle Menu</a>
+                    </div>
+
+                    <!-- Help content -->
+                    <div class="col-lg-12" id="help" style="display:none">
+                        <h1>Help</h1>
+                        <p>This is Spectral Workbench Offline!</p>
+                        <p>Make sure to check out all the awesome features it has!</p>
+                        <a href="#menu-toggle" class="btn btn-default menu-toggle" id="menu-toggle">Toggle Menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Flot JS -->
+    <script src="js/flot/jquery.flot.js"></script>
+    <script src="js/flot/jquery.flot.crosshair.js"></script>
+    <script src="js/flot/jquery.flot.threshold.min.js"></script>
+
+    <!-- Application specific JS -->
+    <script src="js/capture.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/application.js"></script>
+    <script src="js/getUserMedia.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $(".menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+    <!-- Content Showing Script -->
+    <script>
+        $SWB = {
+            current_content : "home",
+            capture_scripts_loaded : false,
+            showContent: function(spaceID) {
+                if (spaceID != $SWB.current_content){
+                    $("#"+this.current_content).toggle(100);
+                    if (this.current_content != "home")
+                        $("#"+this.current_content+"-link").toggleClass("active");
+                    this.current_content = spaceID
+                    $("#"+this.current_content).toggle(100);
+                    $("#"+this.current_content+"-link").toggleClass("active");
+                }
+            }
+        }
+
+        $("#dashboard-link").click(function(e) {
+            e.preventDefault();
+            $SWB.showContent("dashboard");
+            updateThumbnails();
+            if ($SWB.just_saved){
+                $('#justsaved').show()
+                $SWB.just_saved = false
+            }
+
+            else {
+                $('#justsaved').hide()
+            }
+        });
+
+        $("#capture-link").click(function(e) {
+            e.preventDefault();
+            $SWB.showContent("capture");
+            if (!$SWB.capture_scripts_loaded) {
+
+                flotoptions.grid = {
+          				clickable: true,
+          				hoverable:true,
+          				borderWidth: 0,
+          				color: "#aaa",
+          				backgroundColor: "#111"
+          			}
+          			flotoptions.colors = [ "#ccc", "#E02130", "#FAB243", "#429867", "#2B5166" ]//, "#482344" ]
+
+          			$W.initialize({
+          				calibrated:false,
+          				interface:"capture",
+          				width:640
+          			})
+
+          			setInterval($W.getRow,100)
+          			$W.calibrated = false
+
+                $SWB.capture_scripts_loaded = true
+          		}
+        });
+
+        $("#analyze-link").click(function(e) {
+            e.preventDefault();
+            $SWB.showContent("analyze");
+        });
+
+        $("#upload-link").click(function(e) {
+            e.preventDefault();
+            $SWB.showContent("upload");
+        });
+
+        $("#help-link").click(function(e) {
+            e.preventDefault();
+            $SWB.showContent("help");
+        });
+
+    </script>
+
+    <script>
+      (function() {
+        $("[rel=tooltip]").tooltip()
+        $("[rel=popover]").popover()
+      })()
+    </script>
+
+    <script>
+				(function(){
+					$W.setSampleRowClickListener()
+				})()
+		</script>
+
+    <script src="js/spectrumstorage.js"></script>
+
+    <script>
+        $("#savespectrum_btn").click(function(e) {
+            e.preventDefault();
+            $SWB.saveSpectrumForm();
+
+            inputs = $('#spectrumform :input')
+            inputs[0].value = "";
+            inputs[1].value = "";
+            inputs[2].value = "";
+
+            $SWB.showContent("dashboard");
+            updateThumbnails();
+            if ($SWB.just_saved){
+                $('#justsaved').show()
+                $SWB.just_saved = false
+            }
+
+            else {
+                $('#justsaved').hide()
+            }
+        });
+
+        function updateThumbnails(){
+            if ($SWB.count < 1) {
+                $('#nospectrums').show()
+                $('#thumbnails').hide()
+            }
+
+            else {
+                $('#thumbnails').html($SWB.getRenderableThumbs())
+                $('#nospectrums').hide()
+                $('#thumbnails').show()
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
